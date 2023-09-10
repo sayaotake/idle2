@@ -68,13 +68,13 @@ module.exports = function(api) {
       [
         '@babel/plugin-transform-runtime',
         {
-          helpers: false
+          helpers: true
         }
       ],
       [
         '@babel/plugin-transform-regenerator',
         {
-          async: false
+          async: true
         }
       ]
     ].filter(Boolean)
