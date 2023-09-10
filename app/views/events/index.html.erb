@@ -1,0 +1,37 @@
+
+<h1>自分の題名</h1>
+<h3>一覧ページ</h3>
+<%= link_to "新規投稿へ", new_event_path %>
+<%= link_to "video一覧へ", videos_path %>
+<%= link_to "photo一覧へ", photos_path %>
+<% if user_signed_in? %>
+    <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+
+<div class="events-container">
+  <% @events.each do |t| %>
+    <div class="event">
+    <%= link_to t.user.name, user_path(t.user.id) %>
+        <%= t.title %>
+        <%= t.review %>
+        
+    <% if user_signed_in? %>
+        <% if current_user.already_captured?(t) %>
+            <%= link_to event_capture_path(id: t.id, event_id: t.id), method: :delete do %>
+                <i class="fas fa-heart"></i><%= t.captures.count %>
+            <% end %>
+        <% else %>
+            <%= link_to event_captures_path(id: t.id, event_id: t.id), method: :post do %>
+                <i class="far fa-heart"></i><%= t.captures.count %>
+            <% end %>
+        <% end %>
+    <% else %>
+        <i class="far fa-heart"></i><%= t.captures.count %>
+    <% end %>
+        <%= link_to "詳細へ", event_path(t.id) %> 
+        <%= link_to "編集する", edit_event_path(t.id) %>
+        <%= button_to "削除する", event_path(t.id), method: :delete %> 
+    </div>
+    
+    <% end %>
+  </div>

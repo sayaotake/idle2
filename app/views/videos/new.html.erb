@@ -1,0 +1,14 @@
+<h1>動画投稿ページ</h1>
+<h3>新規投稿ページ</h3>
+<%= form_for @video do |f| %>
+<div class="field">
+    <%= f.label :コメント  %>
+    <%= f.text_area :comment, :size => "30x2" %>
+    <%= f.label :youtube %>
+    <%= f.text_field :youtube_url, :size => 140 %>
+</div>
+
+    <%= f.submit "投稿する" %>
+<% end %>
+
+<%= link_to "一覧に戻る", videos_path %> 

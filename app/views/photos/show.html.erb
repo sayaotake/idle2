@@ -1,0 +1,44 @@
+<h1>GeekTwitter</h1>
+<h3>photo詳細</h3>
+<div class="photo">
+    <p><%= @photo.group %></p>
+    <p><%= @photo.name %></p>
+    <p><%= @photo.about %></p>
+    <p><%= @photo.created_at %></p>
+    <% if user_signed_in? %>
+    <% if current_user.already_favorited?(@photo) %>
+      <%= link_to photo_favorite_path(@photo), method: :delete do %>
+        <i class="fas fa-heart"></i><%= @photo.favorites.count %>
+      <% end %>
+    <% else %>
+      <%= link_to photo_favorites_path(@photo), method: :post do %>
+        <i class="far fa-heart"></i><%= @photo.favorites.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+  <i class="far fa-heart"></i><%= @photo.favorites.count %>
+  <% end %>
+</div>
+
+<div class="review-wrapper">
+  <p>コメント一覧</p>
+  <% @reviews.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@photo, @review], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-reviews"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "photo一覧に戻る", photos_path %>

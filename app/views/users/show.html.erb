@@ -1,0 +1,43 @@
+<h1>users#show</h1>
+<%= image_tag @user.image_url, size: "250x200" if @user.image? %>
+<p>名前 : <%= @user.name %></p>
+<p>メールアドレス : <%= @user.email %></p>
+<p>プロフィール : <%= @user.profile %></p>
+
+<% if current_user.id == @user.id %>
+  <%= link_to "編集する", edit_user_registration_path %>
+<% end %>
+
+<% if @user.id == current_user.id %>
+    <%= @msg %>
+<% else %>
+    <% if @isRoom == true %>
+        <p><%= link_to 'DMへ', room_path(@roomId) %></p>
+    <% else %>
+        <%= form_for @room do |f| %>
+            <%= fields_for @entry do |e|%>
+                <% e.hidden_field :user_id, value: @user.id %>
+            <% end %>
+        <%= f.submit "DMを開始する"%>
+        <% end %>
+    <% end %>
+<% end %>
+
+
+<h2>ユーザーの投稿一覧</h2>
+<% @user.videos.each do |t| %>
+  <%= t.user.name %>
+  <%= t.youtube_url %>
+<% end %>
+
+<!-- 以下はいいね機能を実装している場合-->
+<h2>ユーザーがいいねした投稿一覧</h2>
+<% @user.liked_videos.each do |t| %>
+  <%= t.user.name %>
+  <%= t.youtube_url %>
+<% end %>
+<!-- ここまで-->
+
+<%= link_to "video一覧に戻る", videos_path %>
+<%= link_to "photo一覧に戻る", photos_path %>
+<%= link_to "event一覧に戻る", events_path %>
