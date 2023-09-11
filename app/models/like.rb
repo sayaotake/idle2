@@ -1,4 +1,5 @@
 class Like < ApplicationRecord
+  self.table_name = "likes"
   belongs_to :video
   belongs_to :user
 

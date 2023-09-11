@@ -1,4 +1,5 @@
 class Favorite < ApplicationRecord
+  self.table_name = "favorites"
   belongs_to :photo
   belongs_to :user
 

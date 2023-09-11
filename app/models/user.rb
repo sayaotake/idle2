@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  self.table_name = "users"
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   mount_uploader :image, ImageUploader

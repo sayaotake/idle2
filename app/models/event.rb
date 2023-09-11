@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+    self.table_name = "events"
     belongs_to :user
 
     has_many :captures, dependent: :destroy
